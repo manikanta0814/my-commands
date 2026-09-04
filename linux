@@ -1,0 +1,215 @@
+uname
+uname -r
+Displays the kernel name.
+Displays the Linux kernel release/version.
+uname -a
+uptime
+Displays available kernel and system information.
+Shows how long the system has been running, logged-in user count, and load
+averages.
+uptime -p
+uptime -s
+Shows uptime in a human-readable format.
+Shows the date and time when the system was started.
+hostname
+last reboot
+Displays the system hostname.
+Shows previous system reboot records.
+date
+date +"%d"
+Shows the current system date, time, and timezone.
+Prints the day of the month (01-31).
+date +"%m"
+Prints the month number (01-12).
+date +"%y"
+Prints the last two digits of the year.
+date +"%H"
+date +"%M"
+Prints the hour in 24-hour format (00-23).
+Prints the minute (00-59).
+date +"%S"
+date +"%D"
+Prints the seconds (normally 00-59).
+Prints the date as MM/DD/YY.
+date +"%F"
+Prints the full date as YYYY-MM-DD.
+date +"%A"
+Prints the full weekday name.
+date +"%B"
+who
+Prints the full month name.
+Displays users who are currently logged in.
+whoami
+Displays the effective username of the current userlscpu
+lsblk -a
+Displays CPU architecture information.
+Lists all block devices, including empty devices.
+free
+free -m
+Displays physical and swap-memory usage.
+Displays memory usage in mebibytes.
+df
+df -h
+Reports filesystem disk-space usage.
+Reports filesystem usage in human-readable units.
+du filename
+du -sh filename
+Shows disk usage for a file; recursively summarizes a directory.
+Shows only the human-readable total disk usage.
+cat /proc/cpuinfo
+cat /proc/meminfo
+Displays detailed CPU information exposed by the kernel.
+Displays detailed memory information exposed by the kernel.
+sudo fdisk -l
+fdisk -s /dev/partition
+Lists detected disks and their partition tables.
+Displays a partition size in blocks on systems that support this legacy optiontouch file-name Creates one empty file or updates its timestamps.
+touch f1 f2 f3 Creates or updates multiple files.
+touch file{1..5} Uses brace expansion to create or update file1 through file5.
+mkdir folder1 Creates one directory.
+mkdir f1 f2 f3 Creates multiple directories.
+mkdir folder{1..7} Creates folder1 through folder7 using brace expansion.
+touch folder/file Creates or updates a file inside an existing directory.
+mkdir folder/subfolder Creates a subdirectory when its parent already exists.
+mkdir -p a/b/c Creates the complete directory path, including missing parents.
+cd foldername Changes to the specified directory.
+cd .. Moves to the parent directory.
+cd -Returns to the previous working directory.
+cd Changes to the current user's home directory.
+cd / Changes to the root directory.
+pwd Prints the current working directory.
+ls Lists visible file and directory names.
+ls folder1 Lists the contents of folder1.
+ls -l Shows a long listing with permissions, owner, size, and modification time.
+ls -la Includes hidden entries in the long listing.
+ls -lr Shows a long listing in reverse sort order.
+ls -lt Shows a long listing sorted by modification time, newest first.
+ls -ltr Shows a long listing sorted by modification time, oldest first.
+rmdir folder Removes an empty directory.
+rm file Removes one file; may prompt depending on shell configuration.
+rm f1 f2 f3 Removes multiple files.
+rm file{1..5} Removes file1 through file5 using brace expansion.
+rm -f filename Forces removal without prompting and ignores a missing file; permissions still
+apply.
+rm -f * Force-removes non-hidden files in the current directory.
+rm -rf * Recursively force-removes non-hidden contents in the current directorycat > filename
+cat >> filename
+Reads terminal input into a file, overwriting it; press Ctrl+D to finish.
+Reads terminal input and appends it to a file; press Ctrl+D to finish.
+cat filename
+cat -n filename
+Displays the contents of a file.
+Displays file content with output line numbers.
+tac filename
+rev filename
+Displays file lines in reverse order, last line first.
+Reverses the characters on each input line.
+cat f1 f2 f3
+more f1 f2 f3
+Displays the contents of multiple files in sequence.
+Views multiple files one screen at a time.
+head filename
+tail filename
+Displays the first 10 lines.
+Displays the last 10 lines.
+sed -n '5,9p' filename
+sed -n '7p' filename
+Prints lines 5 through 9.
+Prints line 7.
+head -n 8 filename
+tail -n 4 filename
+Displays the first 8 lines.
+Displays the last 4 lines.
+wc filename
+Prints line, word, and byte counts.
+wc -l filename
+Prints the line count.
+wc -w filename
+wc -c filename
+Prints the word count.
+Prints the byte count.
+cp file1 file2
+cat file1 >> file2
+Copies file1 to file2.
+Appends the contents of file1 to file2.
+cat file1 | tee f2 f3 f4
+cat file1 | tee -a f2 f3 f4
+Displays file1 and overwrites f2, f3, and f4 with the same content.
+Displays file1 and appends the same content to f2, f3, and f4.
+cp file1 folder1/
+mv file1 file2
+Copies file1 into folder1.
+Renames file1 to file2, or moves it to the destination path.
+mv file1 folder1/
+echo folder{2..7} | xargs -n 1 cp -v
+folder1/*
+Moves file1 into folder1.
+Copies folder1's non-hidden contents into folder2 through folder7.
+cmp file1 file2
+diff file1 file2
+Reports the first byte and line where two files differ.
+Displays line-by-line differences between two text filesfind . -name 'file' Searches by name below the current directory.
+find /proc -name 'filename' Searches by name below /proc; permission messages may appear.
+find . -type d -name 'folder' Finds directories named folder below the current directory.
+find . -type f -name 'file1.txt' Finds regular files named file1.txt.
+find . -type f -perm 0777 Finds regular files with permissions exactly 0777.
+find . -type f ! -perm 0777 Finds regular files whose permissions are not exactly 0777.
+find . -perm /u=r Finds entries having the user-read permission bit.
+find . -perm /a=x Finds entries executable by user, group, or others.
+find . -perm /a=w Finds entries writable by user, group, or others.
+find . -type f -empty Finds empty regular files.
+find . -type d -empty Finds empty directories.
+find / -user username Finds entries owned by the specified user; permission messages may appear.
+find / -group groupname Finds entries owned by the specified group.
+find . -mtime 10 Finds entries modified between 10 and 11 days ago.
+find / -atime 100 Finds entries accessed between 100 and 101 days ago.
+find . -cmin -60 Finds entries whose metadata changed within the last 60 minutes.
+find . -mmin -60 Finds entries modified within the last 60 minutes.
+find . -amin -60 Finds entries accessed within the last 60 minutes.
+find . -size 1k Finds entries occupying exactly one 1-KiB block as interpreted by find.
+find / -size +50M -size -100M Finds entries larger than 50 MiB and smaller than 100 MiB.
+locate filename Searches the locate filename database.
+sudo updatedb Updates the filename database used by locate.
+locate -i filename Performs a case-insensitive filename search.
+locate -n 5 '*.txt' Displays at most five matching .txt paths.
+locate -c 'aws*' Prints the number of matching paths.
+grep "word" file Prints lines containing the pattern.
+grep "word" file1 file2 file3 Searches for the pattern in multiple files.
+grep -l "word" file1 file2 file3 Prints only filenames containing a matching line.
+grep -n "word" file Prints matching lines with line numbers.
+grep -i "word" file Performs a case-insensitive search.
+grep -c "word" file Counts matching lines, not individual occurrences.
+grep -e 'pattern1' -e 'pattern2' file1 Searches file1 for either of two patternssudo useradd username
+sudo useradd -e 2027-01-31
+username
+Creates a local user account.
+Creates a user whose account expires on the given date.
+sudo useradd -U username
+sudo useradd -M username
+Creates a user and a same-named group.
+Creates a user without creating a home directory.
+useradd -D
+sudo userdel username
+Displays default settings used when creating users.
+Deletes the user account but normally leaves its home directory.
+sudo userdel -f username
+Forces user deletion; use carefully because owned files may remain.
+sudo userdel -r username
+Deletes the user and removes the home directory and mail spool.
+chage -l username
+su - username
+Displays password-aging and account-expiry information.
+Starts a login shell as the specified user.
+sudo passwd username
+sudo groupadd groupname
+Sets or changes the specified user's password.
+Creates a local group.
+groups
+sudo groupmod -n newgroup
+oldgroup
+Displays groups associated with the current user.
+Renames an existing group.
+sudo groupdel groupname
+sudo groupdel -f groupname
+Deletes a group when it is safe to do so.
+Forces group deletion where the system supports this option
