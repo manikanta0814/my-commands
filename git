@@ -1,0 +1,102 @@
+$ git --version
+Confirm Git is installed.
+$ git config --global user.name 'Mustafa'
+Set the author name.
+$ git config --global user.email 'mail@example.com'
+Set the author email.
+$ mkdir demo && cd demo
+Create and enter a practice folder.
+$ git init
+Create the hidden .git repository.
+$ echo 'hello git' > app.txt
+Create a working file.
+$ git status
+Observe the untracked file.
+$ git add app.txt
+Move its snapshot to staging.
+$ git commit -m 'Add app file'
+Record the staged snapshot locally.TRY IT IN YOUR LAB
+$ git status
+Show branch, staged, unstaged and untracked files.
+$ git diff
+Review unstaged line-by-line changes.
+$ git add app.txt
+Stage only the intended file.
+$ git diff --staged
+Review exactly what the next commit will contain.
+$ git commit -m 'Validate login input'
+Create a focused commit with a meaningful message$ git log
+Full commit history.
+$ git log --oneline
+Compact commit IDs and messages.
+$ git log --graph --oneline --decorate --all
+Visual branch history.
+$ git log --follow -- app.txt
+Follow one file's history across renames.
+$ git show
+Inspect one commit and its patch$ git commit --amend -m 'Better message'
+Replace the latest message.
+$ git add missed.txt && git commit --amend --no-edi$ git branch
+List local branches.
+$ git switch -c feature/login
+Create and switch to a feature branch.
+$ git switch main
+Return to main.
+$ git branch -m old new
+Rename a branch.
+$ git branch -d feature/login
+Delete a fully merged local branch.
+$ git branch -D feature/login
+Force-delete an unmerged branch.
+$ git branch recovered
+Recreate a deleted branch at a known commit$ git switch main
+Choose the receiving branch.
+$ git merge feature/login
+Merge the complete feature branch.
+$ git cherry-pick
+Apply one selected commit.
+$ git merge --abort
+Cancel a conflicted merge.
+$ git cherry-pick --abort
+Cancel a conflicted cherry-pick$ git status
+Find unmerged paths.
+$ git diff
+Inspect conflict sections.
+$ vim app.txt
+Choose or combine the correct content and remove markers.
+$ git add app.txt
+Mark the file resolved.
+$ run tests
+Validate behavior before completing the merge.
+$ git commit
+Complete the merge.$ git switch feature/login
+Move to the feature branch.
+$ git rebase main
+Replay feature commits on top of main.
+$ git add resolved-file
+Stage a conflict resolution.
+$ git rebase --continue
+Continue replaying commits.
+$ git rebase --abort
+Restore the original feature branch$ git stash push -u -m 'WIP login'
+Store tracked and untracked work.
+$ git stash list
+List saved work.
+$ git stash apply
+Apply latest and keep it stored.
+$ git stash pop
+Apply latest and drop it on success.
+$ git stash drop stash@{2}
+Delete one stash.
+$ git rm --cached .env
+Stop tracking a file but keep the local copy
+1 Clone git clone
+2 Branch git switch -c feature/login
+3 Build edit + test locally
+4 Review git status && git diff
+5 Commit git add + git commit
+6 Sync git fetch origin
+7 Update git rebase origin/main
+8 Share git push -u origin feature/login
+9 Validate pull request + CI + review
+10 Merge merge approved code
