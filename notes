@@ -1,0 +1,91 @@
+
+yum install git -y
+Create the repository in github
+cd filename
+copy the respository code (HTTPS)
+git clone (HTTPS code)
+create the file touch file name
+git add *
+git config --global user.name manikanta
+git config --global user.email mani@flm.com
+vim filename (adding data)
+git commit -m "text mesg" filename
+git push origin "branch name"
+
+push all files git push origin --all
+create branch in git: git branch "branchname"
+move the branch: git checkout "branchname"
+
+data pull the local:git pull origin main 
+dowloads the latest changes, but doesn't change your current files :git fetech origin main
+combines downlaoded changes in current file :git merge origin main
+--------------------------------------------------------------------------------------------------------------------------------------------------
+CI/CD: CI:- continues intigration defines as build and test
+code---build---test--deploy
+launch instance c7i-felx(8080 port number)---->install java-21---> jenkins.io(url)--->install jenkins----> start & enable jenkins 
+
+jenkins install commands?:
+
+yum install java-21-amazon-corretto -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/rpm-stable/jenkins.repo
+yum install jenkins -y
+systemctl start jenkins
+systemctl status jenkins
+
+check the file :- ll /etc/yum.repos.d/
+
+systemctl start jenkinsp -(q) ----- >  systemctl status jenkins ----- > systemctl enable jenkins
+copy ip address in instance "http://16.171.35.196:8080/" paste in new tab (http tho start avali https unte avadhu)
+cat url path get password and paste in tab
+
+open job -- add name (without space like mynewjob)------ select freestyle project 
+source code select git
+past url of git that is branch code HTTPS only
+install git in linux
+
+Branch Specifier (blank for 'any') select ur branch --- SAVE 
+click build Now (success ur code)
+
+In pvt repository to build in jenkins same process of public u shoukd add credentials 
+
+-------automatic build -------
+trigger------select GitHub hook trigger for GITScm polling----click save
+in github--go to our repository settings --- select webhooks -- add new webhooks -- Payload URL * http://16.171.35.196:8080/github-webhook/ (jenkins page url )
+----Content type * --- select----application/json  --- final click add webhook 
+
+job schedule 10.30am time will takes 24hrs
+CRON: represnts the * * * * *
+*mintues *hours *date *month *day in a week 
+example 10.30am i want build the job
+***** means 30 10 07 09 01
+sunday 0 monday 1 tuesday 2 wednesday 3 thursday 4 friday saturday 6
+example2 : 11.50am 
+*****  ----- 50 11 07 09 01
+open jenkins page --- select job ---configure---trigger zone (untick git ) select poll scm give *****
+
+change the time in putty  timedatectl set-timezone Asia/Kolkata
+after change the time restart the jenkins systemctl restart jenkins
+
+-----------------------------------------------------------------------------------------------------
+MAVEN build life cycle
+project generation -- dev write code pom.xml files
+complie -- comple the code 
+unit test -- run the unit test to check the errors
+package -- genetere the files war or jar based on code
+install -- pom.xml lo dependency pedatam jar or war files lo
+deploy -- app deploy
+clean -- clean
+
+java file build in "maven"
+jar-- java archive file  --- only java file 
+war-- web archive file --- java+springboot
+ear-- enterprice archive file --- j2ee 
+
+mvn commands for mannual:
+project generation -- mvn archetype:generate
+complie -- mvn compile
+unit test -- mvn test
+package -- mvn package
+install -- mvn install
+deploy -- -------------
+clean -- mvn clean
