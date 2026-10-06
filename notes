@@ -1,3 +1,12 @@
+------------------Devops------------------------
+
+Trainer mail : flmtechteam.devops@gmail.com
+
+---Linux--->Git--->github-->Jenkins
+
+Git token " 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  "
+
+Jenkins path Cat (path) to get the pwd
 
 yum install git -y
 Create the repository in github
@@ -94,12 +103,432 @@ clean -- mvn clean
 to check the code in command
 maven default path - /var/lib/jenkins/
 settings ---- tools--- maven installation---- save 
-opwen our pipline job --buildstep----select Invoke top-level Maven targets --add our maven name---goal is nothing but command (clean install)--save--build 
+open our pipline job --buildstep----select Invoke top-level Maven targets --add our maven name---goal is nothing but command (clean install)--save--build 
 build success --- to get war file ----(launch one more instance for deploy application (take shg as taken jenkin shg ))
 app server examples -- tomcat, jboss, glassfish 
-tomcat------------
+tomcat---------------------------------------------
 connect the app server --- login to root user --- install tomcat in amzon linux window ---- a=copy ip address 13.53.39.205:8080 ----click manger app
 give credentials user: tomcat pwd admin@123
 create plugin in jenkin---go to settings --- plugins --- availbe plugins -- search deploy to container---select and install ----go back jenkin dashboard 
 select the job --- post build action --- select Deploy war/ear to a container--- WAR/EAR files?
 target/*.war   --- add container (tomcat 9.x) --- add credentials-- global -- give ur tomcat user name and pwd ---give tomcat url http://13.53.39.205:8080/
+
+Nexus -----------------
+we want 3 servers
+Jenkins --- for pipline
+Tomcat --- run the application
+Nexus --- Artifacts store chydaniki 
+
+create the server just run jenkins and build it 
+install maven----setting --- tools ---- maven installation---- save ---nxt config the CI Pipeline in buildstep--select "Invoke top-level Maven targets"
+Create instance for nexus and connect putty 
+cd /opt --- and download the file for nexus
+copy the nexus link and download the file 
+wget filename and unzip the file " tar -zxvf filename "
+ll ----- nexus start chyali ante scrpit dwara avali so go nexus folder
+cd nexusfolder
+ll ------- cd bin
+ll ------ ./ nexus start ----------- get error "WARNING: Detected execution as "root" user.  This is NOT recommended!" 
+useradd nexus ----- get back cd../..
+change the rootuser so  chown -R nexus:nexus nexus-3.96.1-01
+switch the user su - nexus
+cd /opt
+ll
+cd  nexus-3.96.1-01
+ll ---------- cd bin ----------- ./nexus start
+start nexus with public ip and edit inbound rule change port no 8080-8081
+copy ip adress "10.20.136:8081" username:admin pwd (/opt/sonatype-work/nexus3/admin.password copy that go to nexus server
+restart nexus in server ./nexus restart
+logain again in nexus in website
+create repostory in nexus --- go to setting --- select repostry --- create it select maven2 hosted--- deplyment police lo selct allow -- click create 
+installpulgins in jenikins site "Nexus Artifact UploaderVersion install it "
+got my job select build step nexus artifact --copy url nexus ---- remove http in url--- create the pwd --- gropid in our pom.xml
+ArtifactId-----myweb
+Type?-----war
+File?---------target/myweb.war
+build the pipleine 
+---------------------------------------------------------
+jenkins master / slave topic ---------( 1.46 session )
+Environments: -dev - Test - UAT(User Aceptence Test)/Staging -Prod 
+we should create threee instance server (Environments)  DEv,test,uat,prod evry server (code+Build+Test+Deploy+CI/cd:Jenikins)
+so thats way we automate the application that is jenkins pipleine.
+install git 
+login ec2 server C7-felix and login the jeinkins with ip address here we download pem file also 
+create free style job add git in that click save and build so i want salve server so again c7i-felx create
+so login that server and install yum install java-21-amazon-corretto -y
+go to jenkins settings--- node---- type excutore like 2,3 --- jenkins default path  /var/lib/jenkins/ 
+in slave server the pipeline stores in diff that is /home/ec2-user/myjenkins/ that is our creation of path
+Usage : Only build jobs with label expressions matching this node
+Launch method: Launch agents via SSH -----Host----- Pvt ip adress 172.31.8.179-----Credentials: convert our ppk file to text and copy the pwd
+Host Key Verification Strategy: Non verifying Verification Strategy click save and build the 
+-----------------------------------------------------------------------
+Jenikins pipeline:
+create server and login jenikins port no : 8080 
+create a pipleine job
+here we write pipleine scrpit 
+pipeline {
+    agent any
+
+    stages {
+        stage('code') {
+            steps {
+                //action
+            }
+        }
+    }
+}
+Shortcut PASSS  --- pipleine--agent any--stages--stage-steps
+pipleine have diff stages --- code---build---unittest--Artifact--deploy
+
+Example :
+    pipeline {
+    agent any 
+    stages {
+        stage ("firststage") {
+            steps {
+                echo "THis is my own pipeline"
+            }
+        }
+        stage ("secondstage") {
+            steps {
+                echo "this is my second stage"
+            }
+        }
+        stage ("Thirdstage") {
+            steps {
+                echo "last stage"
+            }
+        }
+    }
+}
+(u want pipeline stage view install the plugin "pipeline-stage view" ) 
+now we add to get code in pipeline through the Git -- click pipleine syntax -- select git: Git
+public repostory ki credentials evalisna avsram ledu copy and paste the git syntax code and build the pipeline
+pipeline {
+    agent any
+
+    stages {
+        stage('code') {
+            steps {
+                //this stage is used to git the code from the github
+                git 'https://github.com/manikanta0814/one.git'
+            }
+        }
+    }
+}
+like this.
+next we can add maven config so settings---add maven---- click save---
+pipeline {
+    agent any
+    tools {
+        maven 'mymaven'
+    }
+
+    stages {
+        stage('code') {
+            steps {
+                //this stage is used to git the code from the github
+                git 'https://github.com/manikanta0814/one.git'
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+    }
+}
+and we deploy the code in Tomcat so we take one more server for tomcat install the commands
+u should the security groups port no 8080 
+login the ip address :8080--- manage app --- username : tomcat -- pwd: admin@123
+after that install the plugin deploy to container in jenkins--write the scirpt in pipeline add next stage 
+write the tomcat syntax through pipeline syntax and restart the jenkins systemctl restart jenkins
+login avu and our pipeline lo config chesuko
+Sample Step
+---deploy: Deploy war/ear to a container
+WAR/EAR files
+---target/*war
+Context path
+---myapp
+Containers
+---Tomcat 9.x Remote
+Delete
+Credentials
+---tomcat/****** (tomcat credentials)
+Add
+Tomcat URL
+--http://13.61.24.31:8080/manager/html
+Generate Pipeline Script
+deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://13.61.24.31:8080/manager/html')], contextPath: 'myapp', war: 'target/*war'
+pipeline {
+    agent any
+    tools {
+        maven 'mymaven'
+    }
+
+    stages {
+        stage('code') {
+            steps {
+                //this stage is used to git the code from the github
+                git 'https://github.com/manikanta0814/one.git'
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://13.61.24.31:8080/manager/html')], contextPath: 'myapp', war: 'target/*war'
+            }
+        }
+    }
+}
+after that refresh tomcat website and see the output myapp.
+Task is integrate with nexus.
+install plugin nexus artifact
+pipeline {
+    agent any
+    tools {
+        maven 'mymaven'
+    }
+
+    stages {
+        stage('code') {
+            steps {
+                //this stage is used to git the code from the github
+                git 'https://github.com/manikanta0814/one.git'
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+        stage("artifact") {
+            steps {
+                //script
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://13.61.24.31:8080/manager/html')], contextPath: 'myapp', war: 'target/*war'
+            }
+        }
+    }
+}
+
+marvel : mani123456
+-----------------------------------------------------------------------------------------
+jenkins pipeline vairables 
+EX :- 
+pipeline {
+    agent any
+    environment {
+        profile = "Manikanta"
+        company = "TCS"
+        year = 2.5
+        domain = ".net"
+    }
+    stages {
+        stage ("code") {
+            steps {
+                echo "My name is $profile"
+            }
+        }
+        stage ("Build") {
+            environment {
+                place = "hyderabad"
+            }
+            steps {
+                echo "I am working in $company in $place"
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                echo "I have $year of exp in $domain"
+            }
+        }
+    }
+} 
+
+post build actions :-
+golbal vairable --- setting ---- system --- golbal properties --- Environment variables click that --give the varibles in that (ADD)
+pipeline {
+    agent any
+    environment {
+        profile = "Manikanta"
+        company = "TCS"
+        year = 2.5
+        domain = ".net"
+    }
+    stages {
+        stage ("code") {
+            steps {
+                echo "My name is $profile $app"
+            }
+        }
+        stage ("Build") {
+            environment {
+                place = "hyderabad"
+            }
+            steps {
+                echo "I am working in $company in $place and learning $app"
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                echo "I have $year of exp in $domain"
+            }
+        }
+        stage ("app") {
+            steps {
+                echo "I am learning $app"
+            }
+        }
+    }
+}
+If pipeline ----success/Fail/Abort we want get message like mail or Slack(Real time communitcation) that means notification 
+pipeline {
+    agent any
+    environment {
+        profile = "Manikanta"
+        company = "TCS"
+        year = 2.5
+        domain = ".net"
+    }
+    stages {
+        stage ("code") {
+            steps {
+                echo "My name is $profile $app"
+            }
+        }
+        stage ("Build") {
+            environment {
+                place = "hyderabad"
+            }
+            steps {
+                echo "I am working in $company in $place and learning $app"
+                sleep 10
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                echo "I have $year of exp in $domain"
+            }
+        }
+        stage ("app") {
+            steps {
+                echo "I am learning $app"
+            }
+        }
+    } 
+    post {
+        success {
+            echo "pipline is success"
+        }
+        failure {
+            echo "failed"
+        }
+        aborted {
+            echo "abort my pipline"
+        }
+    }
+}
+
+default vairable sh "printenv" this one is give the build url & job id & build no 
+by using this printenv to get the notification thorugh email so we need to install SMTP-simple mail transfer protocal in sysytem we have email plugin
+E-mail Notification
+SMTP server ----- smtp.gmail.com ----- user name :- our mail id --- pwd -- we get in our mail seetings search the app password to get pwd and past in jenkins
+select use SSL, port no 465 lets intigrate in our pipeline
+pipeline {
+    agent any
+    environment {
+        profile = "Manikanta"
+        company = "TCS"
+        year = 2.5
+        domain = ".net"
+    }
+    stages {
+        stage ("code") {
+            steps {
+                echo "My name is $profile $app"
+            }
+        }
+        stage ("Build") {
+            environment {
+                place = "hyderabad"
+            }
+            steps {
+                echo "I am working in $company in $place and learning $app"
+                sh "printenv"
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                echo "I have $year of exp in $domain"
+            }
+        }
+        stage ("app") {
+            steps {
+                echo "I am learning $app"
+            }
+        }
+    } 
+    post {
+        always {
+            
+            mail to: 'nekuyandhukuranamil@gmail.com',
+            subject: "Build Status: ${currentBuild.fullDisplayName}",
+            body: "The build ${env.BUILD_NUMBER} finished with status: ${currentBuild.currentResult}. View logs at: ${env.BUILD_URL}"
+        
+        }
+    }
+}
+
+if any manger or else some one has approve ur build pipeline u need to add the cmmnd is 
+input {
+                message "can i deploy"
+            }
+in ur pipeline script stages Ex:-
+pipeline {
+    agent any
+    environment {
+        done ="finish"
+        status ="now"
+    }
+
+    stages {
+        stage('code') {
+            input {
+                message "can i deploy"
+            }
+            steps {
+                echo "my work $done"
+            }
+        }
+        stage('build') {
+            steps {
+                echo "what ur doing $status"
+            }
+        }
+    }
+    post {
+        always {
+            
+            mail to: 'nekuyandhukuranamil@gmail.com',
+            subject: "Build Status: ${currentBuild.fullDisplayName}",
+            body: "The build ${env.BUILD_NUMBER} finished with status: ${currentBuild.currentResult}. View logs at: ${env.BUILD_URL}"
+        
+        }
+    }
+}
+
+------------------------------------------------------------------------
+Docker file install
+
+yum install docker -y && systemctl start docker && systemctl enable docker
+
+*multi stage docker file (production)
+there are two stage--build stage & final stage 
