@@ -4,7 +4,7 @@ Trainer mail : flmtechteam.devops@gmail.com
 
 ---Linux--->Git--->github-->Jenkins
 
-Git token " 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  "
+Git token " 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  "      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
 
 Jenkins path Cat (path) to get the pwd
 
@@ -19,7 +19,7 @@ git config --global user.name manikanta
 git config --global user.email mani@flm.com
 vim filename (adding data)
 git commit -m "text mesg" filename
-git push origin "branch name"
+git push origin "branch name" (main/master)
 
 push all files git push origin --all
 create branch in git: git branch "branchname"
@@ -524,11 +524,16 @@ pipeline {
         }
     }
 }
+task : use the master and slave in pipeline script
+---------------------------------------------------------------------------
+"SONARQUBE"
+Pipeline : CI/CD
+Code---> Build ---> Unit Test --->CQA(Code qulity analysis)---> Artifcat ---> Deploy ---> PBA (Post Build Actions)
+here we know Code---> Build ---> Unit Test ---> Artifcat ---> Deploy 
+CQA ---> that means dev code bug, Vurlb  we perform SONARQUBE
+total we need 4 servers (c7i-felx.large)
+Sonarqube scanner pulgin install
 
-------------------------------------------------------------------------
-Docker file install
 
-yum install docker -y && systemctl start docker && systemctl enable docker
 
-*multi stage docker file (production)
-there are two stage--build stage & final stage 
+
