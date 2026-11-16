@@ -1,0 +1,163 @@
+DOCKER :-
+yum install docker -y && systemctl start docker && systemctl enable docker
+
+
+
+Two types of archtichers
+-Monalythics 
+---ex:- patym app
+------- payments, bus tickets, flight, train, bills.. one applications have so many servers so run all servers on single server with single Db
+-Micro services 
+---ex:- patym app
+------- payments, bus tickets, flight, train, bills.. one applications have sperate server and seperate Db is known as microservices.
+in real time we prefer Micro services because of it was seperate Database and server.
+
+Virtual machines & RDP (Remote desktop ) here in our own laptops run inside the seprete OS that is called VM & RDP 
+so here we use docker Containerzations instead of creating the vitrual machines. In docker no need OS because it uses the Host OS.
+no need the highest GB in RAM so less GB is enough. 
+
+Containerzations:- is the process of packing the app along with its dependencies. 
+Ex:-   Java Code +  dependencies----------> Image----> this image u can runs any system create a one container and application will runs.
+java code and dependencies motham kalepe pack chese create ainadhi image.image run chese vchedhi Container adi a system OS lo run Chesina  
+dev, test, productions success aidhi.
+----Here image is not Real image 
+
+Commands:-
+	To install docker in Linux : yum install docker -y
+	To see the docker version : docker --version
+	To start the docker service : service docker start
+	To check service is start or not : service docker status
+	To check the docker information : docker info
+	To see all images in local machine : docker images
+	To download image from docker hub to local : docker pull image name
+	To create a container : docker run -itd --name cont-name -p 8081:80 shaikmustafa/dm   (it means intractive terminal )
+	To start container : docker start container name
+	To see all containers : docker ps -a
+	To see only running containers : docker ps (ps: process status)
+	To stop the container : docker stop container name
+--------------------------------------------------------------------------------------------------------------------------------
+dev ----> code ----> images ----> container (app)
+here we know about how to create an image (dockerfile we should create any image in any programming language)
+dockerfile we have to learn 10 components 
+--------> code --------> code dockerfile --------> image --------> app 
+Github          clone                      build          run
+dockerfile ? ---> has a set of instructions that will helps u to containeriz the application.
+dockerfile components:-
+1. From : used to define base images (Ex:- pyhton, mysql, nginx images )
+2. Expose : used to expose the container Port ( Ex:- 80, 8080, 5000, 3000 )
+3. Maintainer : Used to add author details ( Ex:- mustfa, manikanta, aruna, devi )
+4. Labels : used to add a description about our images 
+5. Copy : used to copy the files from host to container ( Syntax :- CP SOURCE DESTINATION ), it can't support url's. 
+6. Add : used to copy the files from host to containers, also it supports url's And extract Zipfiles also 
+
+COMMANDS:
+to create an image : docker build -t imagename .
+to create a container : docker run -itd --name cont-name imagename
+to create a container : docker run -d --name contname -p portnumber (1111:80) imagename
+to enter into container : docker exec -it cont-name bash
+
+
+
+Example of Dockerfile based on above components:
+FROM ubuntu
+EXPOSE 80
+MAINTAINER mustafa
+LABELS this is my first image
+COPY index.html .
+ADD <url-from-internet> .
+------------------------------
+Install Docker :-
+touch app.py index.html style.css req.txt (No of files)
+vim Dockerfile
+{
+FROM ubuntu
+EXPOSE 80
+MAINTAINER mustafa
+LABELS this is my first image
+COPY index.html .
+ADD <url-from-internet> . }
+ll 
+docker build -t firstimage .   (t means tag like name manikanta fist secondimages like that )
+image will creates
+docker images (to check the images )
+docker run -itd --name cont1 firstimage:latest 
+docker ps (container create or not )
+docker exec -it cont1 bash ( we should enter in container )
+for example no of files is there we need to detele some file in that 
+vim .dockerignore
+{
+give file name which one u delete that }
+----------------------------------
+7. Workdir : used to set a default path for our container
+8. Run : used to execute the Commands ( execute the commands while creating an image ) we can use this component multiple times
+
+Linux --------------------> yum "install ki Yum use chestam"
+   |    redhat/amazon linux
+   | 
+   |-------------------------> apt "install ki apt use chestam"
+       ubuntu/Debian
+FROM ubuntu
+COPY aws .
+WORKDIR /manikanta/devops/flm/
+copy azure gcp google .
+RUN touch mydocker
+RUN mkdir newone
+RUN apt update -y
+RUN apt install git -y
+
+9. CMD : used to execute the Commands ( execute the commands after container is created ) we can't use this component multiple times
+10. Entrypoint : used to execute the Commands when we create the Container, we can't use this component multiple times.
+11. ENV : used to pass the variables inside the Containers  (printenv command)
+{
+	FROM ubuntu
+COPY aws .
+WORKDIR /manikanta/devops/flm/
+copy azure gcp google .
+RUN touch mydocker
+RUN mkdir newone
+RUN apt update -y
+RUN apt install git -y
+ENV trainer=mani
+ENV course=devops
+ENV cloude=aws }
+
+For web servers ki docker file
+vim index.html (sample html code)
+vim Dockerfile 
+{
+	FROM httpd
+	EXPOSE 80
+	MAINTAINER Manikanta
+	COPY index.html /usr/local/apache2/htdocs/
+}
+docker build -t imagename .
+docker run -d --name contname -p portnumber (1111:80) imagename
+dockder ps 
+run this web server in newtab 
+--------------------------------------------
+TASK : Create a jenkins pipeline to get a code, build an image and create the container.
+tips:
+create an instence
+install git,jenkins,DOCKER
+allow the permsions chmod 777 /var/run/docker.sock
+---------------------------------------------
+Docker file for applications 
+(for writing pyhton code )
+This for mannual process
+install the git yum install git -y
+git clone http code
+in java project we have pom.xml, scr codes
+in pyhton app.py, req.txt 
+cd pyhton
+pyhton application run cheyali ante:
+{
+pyhton and pip install cheyali 
+pip install -r req.txt
+pyhton app.py to run the application}
+python3 --version
+yum install python-pip -y
+pip install -r requirements.txt
+pyhton app.py
+ 
+	
+	
